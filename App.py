@@ -49,9 +49,8 @@ else:
         if missing_cols:
             st.error(f"Følgende nødvendige kolonner mangler i dine uploads: {', '.join(missing_cols)}")
         else:
-            # Start med EUR-data som basis (har alle de faste felter)
+            # Fletning baseret på alle style-lines, ikke én skabelonlinje
             merged = df2.copy()
-            # Flet på Style Name
             merged = merged.merge(df1[["Style Name", "Wholesale Price DKK", "Recommended Retail Price DKK"]], on="Style Name", how="left")
             merged = merged.merge(df3[["Style Name", "Wholesale Price SEK", "Recommended Retail Price SEK"]], on="Style Name", how="left")
             merged = merged.merge(df4[["Style Name", "Landed"]], on="Style Name", how="left")
@@ -59,21 +58,24 @@ else:
             # Fjern dubletter baseret på Style Name og Barcode
             merged = merged.drop_duplicates(subset=["Style Name", "Barcode"])
 
-            # Indsæt data i template uden at ændre kolonne-rækkefølge
-            for col in template_df.columns:
+            # Ny DataFrame med samme kolonner som templatestruktur
+            final_df = pd.DataFrame(columns=template_df.columns)
+            for col in final_df.columns:
                 if col in merged.columns:
-                    template_df[col] = merged[col]
-            if "Landed" in merged.columns:
-                template_df["Costs DKK"] = merged["Landed"]
+                    final_df[col] = merged[col]
+
+            # Tilføj Landed til Costs DKK hvis den findes
+            if "Costs DKK" in final_df.columns and "Landed" in merged.columns:
+                final_df["Costs DKK"] = merged["Landed"]
 
             # Formater barcode korrekt
-            if "Barcode" in template_df.columns:
-                template_df["Barcode"] = template_df["Barcode"].astype(str).str.replace(".0", "", regex=False)
+            if "Barcode" in final_df.columns:
+                final_df["Barcode"] = final_df["Barcode"].astype(str).str.replace(".0", "", regex=False)
 
             # Download-knap med ekstra ark
             towrite = io.BytesIO()
             with pd.ExcelWriter(towrite, engine='xlsxwriter') as writer:
-                template_df.to_excel(writer, index=False, sheet_name="DKK")
+                final_df.to_excel(writer, index=False, sheet_name="DKK")
                 df2.to_excel(writer, index=False, sheet_name="EUR")
                 df3.to_excel(writer, index=False, sheet_name="SEK")
                 df4.to_excel(writer, index=False, sheet_name="Landed cost")
