@@ -5,21 +5,23 @@ import os
 
 # Titel og beskrivelse
 st.title("ZPP Skabelon-Udfylder")
-st.write("Upload dine 4 datakilder, og appen vil udfylde standardskabelonen korrekt.")
+st.write("Upload ordrebekræftelse og de 4 datakilder, så samles og udfyldes skabelonen automatisk.")
 
 # Indlæs standardskabelon direkte fra appens projektmappe
 TEMPLATE_PATH = "ZPP_standard_template.xlsx"
 if not os.path.exists(TEMPLATE_PATH):
     st.error("Standardskabelonen mangler i projektmappen. Tilføj filen og genstart appen.")
 else:
-    # Upload datafiler
-    with st.sidebar:
+    # Centreret layout
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        order_file = st.file_uploader("Upload ordrebekræftelse (hovedark)", type=["xlsx", "csv"])
         data1 = st.file_uploader("Upload fil 1 (DKK)", type=["xlsx", "csv"])
         data2 = st.file_uploader("Upload fil 2 (EUR)", type=["xlsx", "csv"])
         data3 = st.file_uploader("Upload fil 3 (SEK)", type=["xlsx", "csv"])
         data4 = st.file_uploader("Upload fil 4 (Landed)", type=["xlsx", "csv"])
 
-    if data1 and data2 and data3 and data4:
+    if order_file and data1 and data2 and data3 and data4:
         # Læs standardskabelon
         template_df = pd.read_excel(TEMPLATE_PATH)
 
@@ -29,6 +31,7 @@ else:
                 return pd.read_csv(file)
             return pd.read_excel(file)
 
+        df_order = read_file(order_file)
         df1 = read_file(data1)
         df2 = read_file(data2)
         df3 = read_file(data3)
@@ -40,7 +43,8 @@ else:
             (df1, ["Style Name", "Wholesale Price DKK", "Recommended Retail Price DKK"]),
             (df2, ["Style Name", "Style No", "Brand", "Type", "Category", "Quality", "Color", "Size", "Qty", "Barcode", "Weight", "Country", "Customs Tariff No", "Season", "Delivery", "Wholesale Price EUR", "Recommended Retail Price EUR"]),
             (df3, ["Style Name", "Wholesale Price SEK", "Recommended Retail Price SEK"]),
-            (df4, ["Style Name", "Landed"])
+            (df4, ["Style Name", "Landed"]),
+            (df_order, ["Style Name", "Barcode"])
         ]:
             for col in cols:
                 if col not in df.columns:
@@ -49,13 +53,17 @@ else:
         if missing_cols:
             st.error(f"Følgende nødvendige kolonner mangler i dine uploads: {', '.join(missing_cols)}")
         else:
-            # Fletning baseret på alle style-lines, ikke én skabelonlinje
+            # Start med EUR-data som basis
             merged = df2.copy()
             merged = merged.merge(df1[["Style Name", "Wholesale Price DKK", "Recommended Retail Price DKK"]], on="Style Name", how="left")
             merged = merged.merge(df3[["Style Name", "Wholesale Price SEK", "Recommended Retail Price SEK"]], on="Style Name", how="left")
             merged = merged.merge(df4[["Style Name", "Landed"]], on="Style Name", how="left")
 
-            # Fjern dubletter baseret på Style Name og Barcode
+            # Filtrér kun rækker fra order-filen
+            relevant_rows = df_order[["Style Name", "Barcode"]].drop_duplicates()
+            merged = pd.merge(relevant_rows, merged, on=["Style Name", "Barcode"], how="left")
+
+            # Fjern dubletter
             merged = merged.drop_duplicates(subset=["Style Name", "Barcode"])
 
             # Ny DataFrame med samme kolonner som templatestruktur
@@ -64,18 +72,16 @@ else:
                 if col in merged.columns:
                     final_df[col] = merged[col]
 
-            # Tilføj Landed til Costs DKK hvis den findes
             if "Costs DKK" in final_df.columns and "Landed" in merged.columns:
                 final_df["Costs DKK"] = merged["Landed"]
 
-            # Formater barcode korrekt
             if "Barcode" in final_df.columns:
                 final_df["Barcode"] = final_df["Barcode"].astype(str).str.replace(".0", "", regex=False)
 
             # Download-knap med ekstra ark
             towrite = io.BytesIO()
             with pd.ExcelWriter(towrite, engine='xlsxwriter') as writer:
-                final_df.to_excel(writer, index=False, sheet_name="DKK")
+                final_df.to_excel(writer, index=False, sheet_name="Ordrebekræftelse")
                 df2.to_excel(writer, index=False, sheet_name="EUR")
                 df3.to_excel(writer, index=False, sheet_name="SEK")
                 df4.to_excel(writer, index=False, sheet_name="Landed cost")
