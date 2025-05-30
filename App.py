@@ -14,8 +14,8 @@ if not os.path.exists(TEMPLATE_PATH):
 else:
     # Upload datafiler
     with st.sidebar:
-        data1 = st.file_uploader("Upload fil 1 (EUR)", type=["xlsx", "csv"])
-        data2 = st.file_uploader("Upload fil 2 (DKK)", type=["xlsx", "csv"])
+        data1 = st.file_uploader("Upload fil 1 (DKK)", type=["xlsx", "csv"])
+        data2 = st.file_uploader("Upload fil 2 (EUR)", type=["xlsx", "csv"])
         data3 = st.file_uploader("Upload fil 3 (SEK)", type=["xlsx", "csv"])
         data4 = st.file_uploader("Upload fil 4 (Landed)", type=["xlsx", "csv"])
 
@@ -37,8 +37,8 @@ else:
         # Tjek at nødvendige kolonner findes
         missing_cols = []
         for df, cols in [
-            (df1, ["Style Name"]),
-            (df2, ["Style Name", "Wholesale Price DKK", "Recommended Retail Price DKK"]),
+            (df1, ["Style Name", "Wholesale Price DKK", "Recommended Retail Price DKK"]),
+            (df2, ["Style Name", "Wholesale Price EUR", "Recommended Retail Price EUR"]),
             (df3, ["Style Name", "Wholesale Price SEK", "Recommended Retail Price SEK"]),
             (df4, ["Style Name", "Landed"])
         ]:
@@ -50,8 +50,8 @@ else:
             st.error(f"Følgende nødvendige kolonner mangler i dine uploads: {', '.join(missing_cols)}")
         else:
             # Fletning baseret på relevante kolonner
-            merged = df1.copy()
-            merged = merged.merge(df2[["Style Name", "Wholesale Price DKK", "Recommended Retail Price DKK"]], on="Style Name", how="left")
+            merged = df2.copy()
+            merged = merged.merge(df1[["Style Name", "Wholesale Price DKK", "Recommended Retail Price DKK"]], on="Style Name", how="left")
             merged = merged.merge(df3[["Style Name", "Wholesale Price SEK", "Recommended Retail Price SEK"]], on="Style Name", how="left")
             merged = merged.merge(df4[["Style Name", "Landed"]], on="Style Name", how="left")
 
@@ -79,7 +79,7 @@ else:
             towrite = io.BytesIO()
             with pd.ExcelWriter(towrite, engine='xlsxwriter') as writer:
                 template_df.to_excel(writer, index=False, sheet_name="DKK")
-                df1.to_excel(writer, index=False, sheet_name="EUR")
+                df2.to_excel(writer, index=False, sheet_name="EUR")
                 df3.to_excel(writer, index=False, sheet_name="SEK")
                 df4.to_excel(writer, index=False, sheet_name="Landed cost")
             towrite.seek(0)
