@@ -38,7 +38,7 @@ else:
         missing_cols = []
         for df, cols in [
             (df1, ["Style Name", "Wholesale Price DKK", "Recommended Retail Price DKK"]),
-            (df2, ["Style Name", "Wholesale Price EUR", "Recommended Retail Price EUR"]),
+            (df2, ["Style Name", "Style No", "Brand", "Type", "Category", "Quality", "Color", "Size", "Qty", "Barcode", "Weight", "Country", "Customs Tariff No", "Season", "Delivery", "Wholesale Price EUR", "Recommended Retail Price EUR"]),
             (df3, ["Style Name", "Wholesale Price SEK", "Recommended Retail Price SEK"]),
             (df4, ["Style Name", "Landed"])
         ]:
@@ -49,31 +49,24 @@ else:
         if missing_cols:
             st.error(f"Følgende nødvendige kolonner mangler i dine uploads: {', '.join(missing_cols)}")
         else:
-            # Fletning baseret på relevante kolonner
+            # Start med EUR-data som basis (har alle de faste felter)
             merged = df2.copy()
+            # Flet på Style Name
             merged = merged.merge(df1[["Style Name", "Wholesale Price DKK", "Recommended Retail Price DKK"]], on="Style Name", how="left")
             merged = merged.merge(df3[["Style Name", "Wholesale Price SEK", "Recommended Retail Price SEK"]], on="Style Name", how="left")
             merged = merged.merge(df4[["Style Name", "Landed"]], on="Style Name", how="left")
 
-            # Kopier de nødvendige kolonner ind i skabelonen
-            relevant_cols = [
-                "Style No", "Style Name", "Brand", "Type", "Category", "Quality", "Color",
-                "Size", "Qty", "Barcode", "Weight", "Country", "Customs Tariff No", "Season",
-                "Delivery", "Wholesale Price EUR", "Recommended Retail Price EUR",
-                "Wholesale Price DKK", "Recommended Retail Price DKK",
-                "Wholesale Price SEK", "Recommended Retail Price SEK"
-            ]
-
-            for col in relevant_cols:
-                if col in merged.columns:
-                    template_df[col] = merged[col]
-
-            # Tilføj Landed til Costs DKK kolonne
-            template_df["Costs DKK"] = merged["Landed"]
+            # Kopier alle rækker over i template
+            template_df = merged.copy()
 
             # Formater barcode korrekt
             if "Barcode" in template_df.columns:
                 template_df["Barcode"] = template_df["Barcode"].astype(str).str.replace(".0", "", regex=False)
+
+            # Omdøb Landed til Costs DKK
+            template_df["Costs DKK"] = template_df["Landed"]
+            if "Landed" in template_df.columns:
+                template_df.drop(columns=["Landed"], inplace=True)
 
             # Download-knap med ekstra ark
             towrite = io.BytesIO()
