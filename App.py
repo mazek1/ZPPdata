@@ -34,35 +34,53 @@ else:
         df3 = read_file(data3)
         df4 = read_file(data4)
 
-        # Fletning baseret på relevante kolonner
-        merged = df1.copy()
-        merged = merged.merge(df2[["Style Name", "Wholesale Price DKK", "Recommended Retail Price DKK"]], on="Style Name", how="left")
-        merged = merged.merge(df3[["Style Name", "Wholesale Price SEK", "Recommended Retail Price SEK"]], on="Style Name", how="left")
-        merged = merged.merge(df4[["Style Name", "Landed"]], on="Style Name", how="left")
+        # Tjek at nødvendige kolonner findes
+        missing_cols = []
+        for df, cols in [
+            (df1, ["Style Name"]),
+            (df2, ["Style Name", "Wholesale Price DKK", "Recommended Retail Price DKK"]),
+            (df3, ["Style Name", "Wholesale Price SEK", "Recommended Retail Price SEK"]),
+            (df4, ["Style Name", "Landed"])
+        ]:
+            for col in cols:
+                if col not in df.columns:
+                    missing_cols.append(col)
 
-        # Kopier de nødvendige kolonner ind i skabelonen
-        relevant_cols = [
-            "Style No", "Style Name", "Brand", "Type", "Category", "Quality", "Color",
-            "Size", "Qty", "Barcode", "Weight", "Country", "Customs Tariff No", "Season",
-            "Delivery", "Wholesale Price EUR", "Recommended Retail Price EUR",
-            "Wholesale Price DKK", "Recommended Retail Price DKK",
-            "Wholesale Price SEK", "Recommended Retail Price SEK"
-        ]
+        if missing_cols:
+            st.error(f"Følgende nødvendige kolonner mangler i dine uploads: {', '.join(missing_cols)}")
+        else:
+            # Fletning baseret på relevante kolonner
+            merged = df1.copy()
+            merged = merged.merge(df2[["Style Name", "Wholesale Price DKK", "Recommended Retail Price DKK"]], on="Style Name", how="left")
+            merged = merged.merge(df3[["Style Name", "Wholesale Price SEK", "Recommended Retail Price SEK"]], on="Style Name", how="left")
+            merged = merged.merge(df4[["Style Name", "Landed"]], on="Style Name", how="left")
 
-        for col in relevant_cols:
-            if col in merged.columns:
-                template_df[col] = merged[col]
+            # Kopier de nødvendige kolonner ind i skabelonen
+            relevant_cols = [
+                "Style No", "Style Name", "Brand", "Type", "Category", "Quality", "Color",
+                "Size", "Qty", "Barcode", "Weight", "Country", "Customs Tariff No", "Season",
+                "Delivery", "Wholesale Price EUR", "Recommended Retail Price EUR",
+                "Wholesale Price DKK", "Recommended Retail Price DKK",
+                "Wholesale Price SEK", "Recommended Retail Price SEK"
+            ]
 
-        # Tilføj Landed til Costs DKK kolonne
-        template_df["Costs DKK"] = merged["Landed"]
+            for col in relevant_cols:
+                if col in merged.columns:
+                    template_df[col] = merged[col]
 
-        # Formater barcode korrekt
-        if "Barcode" in template_df.columns:
-            template_df["Barcode"] = template_df["Barcode"].astype(str).str.replace(".0", "", regex=False)
+            # Tilføj Landed til Costs DKK kolonne
+            template_df["Costs DKK"] = merged["Landed"]
 
-        # Download-knap
-        towrite = io.BytesIO()
-        with pd.ExcelWriter(towrite, engine='xlsxwriter') as writer:
-            template_df.to_excel(writer, index=False, sheet_name="Sheet1")
-        towrite.seek(0)
-        st.download_button("Download udfyldt skabelon", towrite, file_name="udfyldt_skabelon.xlsx")
+            # Formater barcode korrekt
+            if "Barcode" in template_df.columns:
+                template_df["Barcode"] = template_df["Barcode"].astype(str).str.replace(".0", "", regex=False)
+
+            # Download-knap med ekstra ark
+            towrite = io.BytesIO()
+            with pd.ExcelWriter(towrite, engine='xlsxwriter') as writer:
+                template_df.to_excel(writer, index=False, sheet_name="DKK")
+                df1.to_excel(writer, index=False, sheet_name="EUR")
+                df3.to_excel(writer, index=False, sheet_name="SEK")
+                df4.to_excel(writer, index=False, sheet_name="Landed cost")
+            towrite.seek(0)
+            st.download_button("Download udfyldt skabelon", towrite, file_name="udfyldt_skabelon.xlsx")
