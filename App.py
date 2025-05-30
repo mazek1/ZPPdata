@@ -59,17 +59,16 @@ else:
             # Fjern dubletter baseret på Style Name og Barcode
             merged = merged.drop_duplicates(subset=["Style Name", "Barcode"])
 
-            # Kopier alle rækker over i template
-            template_df = merged.copy()
+            # Indsæt data i template uden at ændre kolonne-rækkefølge
+            for col in template_df.columns:
+                if col in merged.columns:
+                    template_df[col] = merged[col]
+            if "Landed" in merged.columns:
+                template_df["Costs DKK"] = merged["Landed"]
 
             # Formater barcode korrekt
             if "Barcode" in template_df.columns:
                 template_df["Barcode"] = template_df["Barcode"].astype(str).str.replace(".0", "", regex=False)
-
-            # Omdøb Landed til Costs DKK
-            template_df["Costs DKK"] = template_df["Landed"]
-            if "Landed" in template_df.columns:
-                template_df.drop(columns=["Landed"], inplace=True)
 
             # Download-knap med ekstra ark
             towrite = io.BytesIO()
