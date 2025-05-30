@@ -56,6 +56,9 @@ else:
             merged = merged.merge(df3[["Style Name", "Wholesale Price SEK", "Recommended Retail Price SEK"]], on="Style Name", how="left")
             merged = merged.merge(df4[["Style Name", "Landed"]], on="Style Name", how="left")
 
+            # Fjern dubletter baseret på Style Name og Barcode
+            merged = merged.drop_duplicates(subset=["Style Name", "Barcode"])
+
             # Kopier alle rækker over i template
             template_df = merged.copy()
 
