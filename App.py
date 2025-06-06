@@ -18,7 +18,7 @@ st.markdown("""
         }
         [data-testid="stFileUploader"] {
             padding: 0.2rem !important;
-            margin-bottom: 0.8rem !important;
+            margin-bottom: 1.2rem !important;
         }
         .title {
             text-align: center;
