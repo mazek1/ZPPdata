@@ -19,7 +19,7 @@ st.markdown("""
         }
         .stFileUploader { margin-bottom: 0.1rem; padding: 0.1rem; }
         .file-col [data-testid="stFileUploader"] {
-            min-height: 65px !important;
+            min-height: 105px !important;
             padding: 0.02rem 0.2rem;
         }
         .title {
