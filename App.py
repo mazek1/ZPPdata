@@ -44,6 +44,11 @@ st.markdown("""
         /* Højde på dropzoner */
         [data-testid="stFileUploader"] section {
             height: 50px !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: right;
+            align-items: flex-end;
+            padding: 0.25rem 1rem !important;
         }
         /* Lavere højde kun for de nederste uploadfelter */
         div[data-testid="stFileUploader"] label {
