@@ -9,11 +9,11 @@ st.set_page_config(page_title="ZPP Skabelon-Udfylder", layout="centered")
 st.markdown("""
     <style>
         html, body, .main, .block-container {
-            padding-top: 2rem !important;
+            padding-top: 0rem !important;
             padding-bottom: 0.2rem !important;
         }
         .block-container {
-            padding-top: 0.2rem !important;
+            padding-top: 2rem !important;
             padding-bottom: 0.2rem !important;
         }
         [data-testid="stFileUploader"] {
@@ -42,7 +42,8 @@ st.markdown("""
         [data-testid="stFileUploader"] section {
             height: 50px !important;
             display: flex;
-            justify-content: flex-end;
+            flex-direction: row;
+            justify-content: space-between;
             align-items: center;
             padding: 0 1rem !important;
         }
