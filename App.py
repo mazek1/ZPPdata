@@ -3,37 +3,45 @@ import pandas as pd
 import io
 import os
 
-# Titel og beskrivelse
-st.title("ZPP Skabelon-Udfylder")
-st.write("Upload ordrebekræftelse og de 4 datakilder, så samles og udfyldes skabelonen automatisk.")
+st.set_page_config(page_title="ZPP Skabelon-Udfylder", layout="centered")
 
-# Indlæs standardskabelon direkte fra appens projektmappe
+# Titel og beskrivelse
+st.markdown("""
+    <style>
+        .main { background-color: #f9f9f9; }
+        .block-container { padding-top: 2rem; padding-bottom: 2rem; }
+        .stFileUploader { margin-bottom: 1rem; }
+        .title { text-align: center; font-size: 2.2em; font-weight: 700; }
+        .subtitle { text-align: center; font-size: 1.2em; color: #444; }
+    </style>
+""", unsafe_allow_html=True)
+
+st.markdown("<div class='title'>ZPP Skabelon-Udfylder</div>", unsafe_allow_html=True)
+st.markdown("<div class='subtitle'>Upload ordrebekræftelse og de 4 datakilder, så samles og udfyldes skabelonen automatisk.</div>", unsafe_allow_html=True)
+
 TEMPLATE_PATH = "ZPP_standard_template.xlsx"
 if not os.path.exists(TEMPLATE_PATH):
     st.error("Standardskabelonen mangler i projektmappen. Tilføj filen og genstart appen.")
 else:
-    # Centreret layout for ordrebekræftelse
-    st.markdown("<div style='display: flex; justify-content: center;'>", unsafe_allow_html=True)
-    order_file = st.file_uploader("\n📦 Upload ordrebekræftelse (hovedark)", type=["xlsx", "csv"], key="order")
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("<h5 style='margin-top:3rem;'>📦 Ordrebekræftelse</h5>", unsafe_allow_html=True)
+    order_file = st.file_uploader("Upload ordrebekræftelse (hovedark)", type=["xlsx", "csv"], key="order")
 
-    st.markdown("<div style='max-width: 600px; margin: 0 auto;'>", unsafe_allow_html=True)
-    
-    data1 = st.file_uploader("Upload fil 1 (DKK)", type=["xlsx", "csv"], key="dkk")
-    data2 = st.file_uploader("Upload fil 2 (EUR)", type=["xlsx", "csv"], key="eur")
-    data3 = st.file_uploader("Upload fil 3 (SEK)", type=["xlsx", "csv"], key="sek")
-    data4 = st.file_uploader("Upload fil 4 (Landed)", type=["xlsx", "csv"], key="landed")
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("<hr style='margin:2rem 0;'>", unsafe_allow_html=True)
+    st.markdown("<h5>📂 Datakilder</h5>", unsafe_allow_html=True)
+
+    col1, col2 = st.columns(2)
+    with col1:
+        data1 = st.file_uploader("Upload fil 1 (DKK)", type=["xlsx", "csv"], key="dkk")
+        data3 = st.file_uploader("Upload fil 3 (SEK)", type=["xlsx", "csv"], key="sek")
+    with col2:
+        data2 = st.file_uploader("Upload fil 2 (EUR)", type=["xlsx", "csv"], key="eur")
+        data4 = st.file_uploader("Upload fil 4 (Landed)", type=["xlsx", "csv"], key="landed")
 
     if order_file and data1 and data2 and data3 and data4:
-        # Læs standardskabelon
         template_df = pd.read_excel(TEMPLATE_PATH)
 
-        # Hjælpefunktion til at læse filer fleksibelt
         def read_file(file):
-            if file.name.endswith(".csv"):
-                return pd.read_csv(file)
-            return pd.read_excel(file)
+            return pd.read_csv(file) if file.name.endswith(".csv") else pd.read_excel(file)
 
         df_order = read_file(order_file)
         df1 = read_file(data1)
@@ -41,7 +49,6 @@ else:
         df3 = read_file(data3)
         df4 = read_file(data4)
 
-        # Tjek at nødvendige kolonner findes
         missing_cols = []
         for df, cols in [
             (df1, ["Style Name", "Wholesale Price DKK", "Recommended Retail Price DKK"]),
@@ -57,20 +64,15 @@ else:
         if missing_cols:
             st.error(f"Følgende nødvendige kolonner mangler i dine uploads: {', '.join(missing_cols)}")
         else:
-            # Start med EUR-data som basis
             merged = df2.copy()
             merged = merged.merge(df1[["Style Name", "Wholesale Price DKK", "Recommended Retail Price DKK"]], on="Style Name", how="left")
             merged = merged.merge(df3[["Style Name", "Wholesale Price SEK", "Recommended Retail Price SEK"]], on="Style Name", how="left")
             merged = merged.merge(df4[["Style Name", "Landed"]], on="Style Name", how="left")
 
-            # Filtrér kun rækker fra order-filen
             relevant_rows = df_order[["Style Name", "Barcode"]].drop_duplicates()
             merged = pd.merge(relevant_rows, merged, on=["Style Name", "Barcode"], how="left")
-
-            # Fjern dubletter
             merged = merged.drop_duplicates(subset=["Style Name", "Barcode"])
 
-            # Ny DataFrame med samme kolonner som templatestruktur
             final_df = pd.DataFrame(columns=template_df.columns)
             for col in final_df.columns:
                 if col in merged.columns:
@@ -82,7 +84,6 @@ else:
             if "Barcode" in final_df.columns:
                 final_df["Barcode"] = final_df["Barcode"].astype(str).str.replace(".0", "", regex=False)
 
-            # Download-knap med ekstra ark
             towrite = io.BytesIO()
             with pd.ExcelWriter(towrite, engine='xlsxwriter') as writer:
                 final_df.to_excel(writer, index=False, sheet_name="Ordrebekræftelse")
