@@ -14,7 +14,7 @@ st.markdown("""
             padding-right: 1rem !important;
         }
         .block-container {
-            padding-top: 1.5rem !important;
+            padding-top: 2.5rem !important;
             padding-bottom: 0.2rem !important;
         }
         .stFileUploader { margin-bottom: 0.1rem; padding: 0.1rem; }
