@@ -45,6 +45,13 @@ st.markdown("""
         [data-testid="stFileUploader"] section {
             height: 80px !important;
         }
+        /* Linjeafstand */
+        div[data-testid="stFileUploader"] label {
+            min-height: 20px !important;
+            padding: 0rem 0rem !important;
+            margin: 0 !important;
+
+        }
 </style>
 """, unsafe_allow_html=True)
 
