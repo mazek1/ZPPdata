@@ -22,7 +22,7 @@ st.markdown("""
             margin-bottom: 0.2rem !important;
         }
         [data-testid="stFileUploader"] > div > div {
-            height: 135px !important;
+            height: 100px !important;
         }
         .title {
             text-align: center;
