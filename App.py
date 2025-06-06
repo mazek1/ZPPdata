@@ -43,7 +43,7 @@ st.markdown("""
             height: 50px !important;
             display: flex;
             flex-direction: column;
-            justify-content: right;
+            justify-content: center;
             align-items: flex-end;
             padding: 0.25rem 1rem !important;
         }
