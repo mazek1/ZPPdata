@@ -9,16 +9,16 @@ st.set_page_config(page_title="ZPP Skabelon-Udfylder", layout="centered")
 st.markdown("""
     <style>
         html, body, .main, .block-container {
-            padding-top: 0.2rem !important;
-            padding-bottom: 0.2rem !important;
+            padding-top: 0.1rem !important;
+            padding-bottom: 0.1rem !important;
         }
         .block-container {
             padding-top: 2rem !important;
-            padding-bottom: 0.2rem !important;
+            padding-bottom: 0.1rem !important;
         }
         [data-testid="stFileUploader"] {
-            padding: 0.2rem !important;
-            margin-bottom: 0.2rem !important;
+            padding: 0.1rem !important;
+            margin-bottom: 0.1rem !important;
         }
         
         
