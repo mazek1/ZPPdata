@@ -18,7 +18,7 @@ else:
     st.markdown("</div>", unsafe_allow_html=True)
 
     st.markdown("<br><div style='border: 1px solid #ccc; border-radius: 10px; padding: 20px; max-width: 600px; margin: 0 auto;'>", unsafe_allow_html=True)
-    st.markdown("<h4 style='text-align: center;'>Upload datakilder</h4>", unsafe_allow_html=True)
+    
     data1 = st.file_uploader("Upload fil 1 (DKK)", type=["xlsx", "csv"], key="dkk")
     data2 = st.file_uploader("Upload fil 2 (EUR)", type=["xlsx", "csv"], key="eur")
     data3 = st.file_uploader("Upload fil 3 (SEK)", type=["xlsx", "csv"], key="sek")
