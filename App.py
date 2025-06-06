@@ -32,11 +32,11 @@ else:
 
     col1, col2 = st.columns(2)
     with col1:
-    st.markdown("<div class='file-col'>", unsafe_allow_html=True)
+        st.markdown("<div class='file-col'>", unsafe_allow_html=True)
         data1 = st.file_uploader("Upload fil 1 (DKK)", type=["xlsx", "csv"], key="dkk")
         data3 = st.file_uploader("Upload fil 3 (SEK)", type=["xlsx", "csv"], key="sek")
     with col2:
-    st.markdown("<div class='file-col'>", unsafe_allow_html=True)
+        st.markdown("<div class='file-col'>", unsafe_allow_html=True)
         data2 = st.file_uploader("Upload fil 2 (EUR)", type=["xlsx", "csv"], key="eur")
         data4 = st.file_uploader("Upload fil 4 (Landed)", type=["xlsx", "csv"], key="landed")
     st.markdown("</div>", unsafe_allow_html=True)
