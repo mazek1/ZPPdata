@@ -42,7 +42,7 @@ st.markdown("""
         [data-testid="stFileUploader"] section {
             height: 50px !important;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             padding: 0 1rem !important;
         }
