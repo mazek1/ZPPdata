@@ -17,13 +17,13 @@ else:
     order_file = st.file_uploader("\n📦 Upload ordrebekræftelse (hovedark)", type=["xlsx", "csv"], key="order")
     st.markdown("</div>", unsafe_allow_html=True)
 
-    st.markdown("<br><div style='border: 1px solid #ccc; border-radius: 10px; padding: 20px; max-width: 600px; margin: 0 auto;'>", unsafe_allow_html=True)
+    st.markdown("<div style='max-width: 600px; margin: 0 auto;'>", unsafe_allow_html=True)
     
     data1 = st.file_uploader("Upload fil 1 (DKK)", type=["xlsx", "csv"], key="dkk")
     data2 = st.file_uploader("Upload fil 2 (EUR)", type=["xlsx", "csv"], key="eur")
     data3 = st.file_uploader("Upload fil 3 (SEK)", type=["xlsx", "csv"], key="sek")
     data4 = st.file_uploader("Upload fil 4 (Landed)", type=["xlsx", "csv"], key="landed")
-    st.markdown("</div><br>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 
     if order_file and data1 and data2 and data3 and data4:
         # Læs standardskabelon
