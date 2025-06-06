@@ -43,11 +43,11 @@ st.markdown("""
         }
         /* Lavere højde kun for de nederste uploadfelter */
         [data-testid="stFileUploader"] section {
-            height: 80px !important;
+            height: 50px !important;
         }
         /* Linjeafstand */
         div[data-testid="stFileUploader"] label {
-            min-height: 20px !important;
+            min-height: 50px !important;
             padding: 0rem 0rem !important;
             margin: 0 !important;
 
