@@ -13,7 +13,7 @@ st.markdown("""
             padding-bottom: 0.2rem !important;
         }
         .block-container {
-            padding-top: 1rem !important;
+            padding-top: 1.5rem !important;
             padding-bottom: 0.2rem !important;
         }
         [data-testid="stFileUploader"] {
