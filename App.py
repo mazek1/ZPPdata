@@ -8,12 +8,31 @@ st.set_page_config(page_title="ZPP Skabelon-Udfylder", layout="centered")
 # Titel og beskrivelse
 st.markdown("""
     <style>
-        .main { background-color: #f9f9f9; }
-        .block-container { padding-top: 1rem; padding-bottom: 1rem; }
-        .stFileUploader { margin-bottom: 0.5rem; padding: 0.4rem; }
-        .file-col [data-testid="stFileUploader"] { min-height: 30px !important; padding: 0.1rem 0.4rem; }
-        .title { text-align: center; font-size: 1.9em; font-weight: 700; margin-bottom: 0.2em; }
-        .subtitle { text-align: center; font-size: 1.05em; color: #444; margin-bottom: 1.5em; }
+        html, body, .main, .block-container {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .block-container {
+            padding-top: 0.5rem !important;
+            padding-bottom: 0.5rem !important;
+        }
+        .stFileUploader { margin-bottom: 0.2rem; padding: 0.2rem; }
+        .file-col [data-testid="stFileUploader"] {
+            min-height: 24px !important;
+            padding: 0.05rem 0.3rem;
+        }
+        .title {
+            text-align: center;
+            font-size: 1.6em;
+            font-weight: 700;
+            margin: 0.2em 0 0.3em 0;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 0.95em;
+            color: #444;
+            margin-bottom: 0.8em;
+        }
 </style>
 """, unsafe_allow_html=True)
 
