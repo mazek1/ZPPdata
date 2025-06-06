@@ -33,13 +33,13 @@ st.markdown("""
             text-align: center;
             font-size: 0.9em;
             color: #444;
-            margin-bottom: 0.6em;
+            margin-bottom: 0.1em;
         }
         h5 {
-            margin: 0.2rem 0 0.2rem 0 !important;
+            margin: 0.1rem 0 0.1rem 0 !important;
         }
         hr {
-            margin: 0.6rem 0 !important;
+            margin: 0.1rem 0 !important;
         }
         /* Lavere højde kun for de nederste uploadfelter */
         div[data-testid="stFileUploader"] label {
