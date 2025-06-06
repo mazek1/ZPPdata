@@ -18,11 +18,8 @@ st.markdown("""
         }
         [data-testid="stFileUploader"] {
             padding: 0.2rem !important;
-            margin-bottom: 0.2rem !important;
+            margin-bottom: 0.8rem !important;
         }
-        
-        
-        
         .title {
             text-align: center;
             font-size: 1.5em;
@@ -41,18 +38,11 @@ st.markdown("""
         hr {
             margin: 0.6rem 0 !important;
         }
-        /* Lavere højde kun for de nederste uploadfelter */
+        /* Højde på dropzoner */
         [data-testid="stFileUploader"] section {
             height: 50px !important;
         }
-        /* Linjeafstand */
-        div[data-testid="stFileUploader"] label {
-            min-height: 50px !important;
-            padding: 0rem 0rem !important;
-            margin: 0 !important;
-
-        }
-</style>
+    </style>
 """, unsafe_allow_html=True)
 
 st.markdown("<div class='title'>ZPP Skabelon-Udfylder</div>", unsafe_allow_html=True)
