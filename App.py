@@ -44,7 +44,7 @@ st.markdown("""
         /* Lavere højde kun for de nederste uploadfelter */
         div[data-testid="stFileUploader"] label {
             min-height: 80px !important;
-            padding: 0.1rem 0.3rem !important;
+            padding: 0.1rem 0.1rem !important;
             margin: 0 !important;
         }
 </style>
