@@ -9,9 +9,8 @@ st.set_page_config(page_title="ZPP Skabelon-Udfylder", layout="centered")
 st.markdown("""
     <style>
         html, body, .main, .block-container {
-            margin: 0 auto !important;
-            padding-left: 1rem !important;
-            padding-right: 1rem !important;
+            padding-top: 1rem !important;
+            padding-bottom: 0.5rem !important;
         }
         .block-container {
             padding-top: 2rem !important;
@@ -37,15 +36,16 @@ st.markdown("""
             margin-bottom: 0.6em;
         }
         h5 {
-            margin: 0.6rem 0 0.3rem 0 !important;
+            margin: 0.2rem 0 0.2rem 0 !important;
         }
         hr {
-            margin: 0.8rem 0 !important;
+            margin: 0.6rem 0 !important;
         }
         /* Lavere højde kun for de nederste uploadfelter */
         div[data-testid="stFileUploader"] label {
             min-height: 80px !important;
-            padding: 0.2rem 0.5rem !important;
+            padding: 0.1rem 0.3rem !important;
+            margin: 0 !important;
         }
 </style>
 """, unsafe_allow_html=True)
