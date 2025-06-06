@@ -25,7 +25,7 @@ st.markdown("""
             height: auto !important;
         }
         [data-testid="stFileUploader"] .upload-drop-zone {
-            min-height: 135px !important;
+            min-height: 100px !important;
         }
         .title {
             text-align: center;
