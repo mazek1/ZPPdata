@@ -13,7 +13,7 @@ st.markdown("""
             padding-bottom: 0.2rem !important;
         }
         .block-container {
-            padding-top: 0.2rem !important;
+            padding-top: 2rem !important;
             padding-bottom: 0.2rem !important;
         }
         [data-testid="stFileUploader"] {
@@ -36,7 +36,7 @@ st.markdown("""
             margin: 0.2rem 0 0.2rem 0 !important;
         }
         hr {
-            margin: 0.6rem 0 !important;
+            margin: 2rem 0 !important;
         }
         /* Højde på dropzoner */
         [data-testid="stFileUploader"] section {
