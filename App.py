@@ -9,11 +9,11 @@ st.set_page_config(page_title="ZPP Skabelon-Udfylder", layout="centered")
 st.markdown("""
     <style>
         html, body, .main, .block-container {
-            padding-top: 0rem !important;
+            padding-top: 2rem !important;
             padding-bottom: 0.2rem !important;
         }
         .block-container {
-            padding-top: 2rem !important;
+            padding-top: 0.2rem !important;
             padding-bottom: 0.2rem !important;
         }
         [data-testid="stFileUploader"] {
@@ -41,6 +41,16 @@ st.markdown("""
         /* Højde på dropzoner */
         [data-testid="stFileUploader"] section {
             height: 50px !important;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1rem !important;
+        }
+
+        [data-testid="stFileUploader"] button {
+            padding: 0.2rem 0.5rem !important;
+            font-size: 0.8rem !important;
+            margin: 0 !important;
         }
     </style>
 """, unsafe_allow_html=True)
