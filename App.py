@@ -11,7 +11,7 @@ st.markdown("""
         .main { background-color: #f9f9f9; }
         .block-container { padding-top: 2rem; padding-bottom: 2rem; }
         .stFileUploader { margin-bottom: 1rem; padding: 0.5rem; }
-        [data-testid="stFileUploader"] { min-height: 80px; }
+        .file-col [data-testid="stFileUploader"] { min-height: 40px !important; padding: 0.25rem 0.5rem; }
         .title { text-align: center; font-size: 2.2em; font-weight: 700; }
         .subtitle { text-align: center; font-size: 1.2em; color: #444; }
 </style>
@@ -32,11 +32,14 @@ else:
 
     col1, col2 = st.columns(2)
     with col1:
+    st.markdown("<div class='file-col'>", unsafe_allow_html=True)
         data1 = st.file_uploader("Upload fil 1 (DKK)", type=["xlsx", "csv"], key="dkk")
         data3 = st.file_uploader("Upload fil 3 (SEK)", type=["xlsx", "csv"], key="sek")
     with col2:
+    st.markdown("<div class='file-col'>", unsafe_allow_html=True)
         data2 = st.file_uploader("Upload fil 2 (EUR)", type=["xlsx", "csv"], key="eur")
         data4 = st.file_uploader("Upload fil 4 (Landed)", type=["xlsx", "csv"], key="landed")
+    st.markdown("</div>", unsafe_allow_html=True)
 
     if order_file and data1 and data2 and data3 and data4:
         template_df = pd.read_excel(TEMPLATE_PATH)
