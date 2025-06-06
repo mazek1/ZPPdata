@@ -18,10 +18,11 @@ st.markdown("""
             padding-bottom: 0.2rem !important;
         }
         [data-testid="stFileUploader"] {
-            padding: 1rem !important;
-            height: auto !important;
-            min-height: 120px !important;
-            margin-bottom: 1.2rem !important;
+            padding: 0.5rem !important;
+            margin-bottom: 0.7rem !important;
+        }
+        [data-testid="stFileUploader"] > div:first-child {
+            min-height: 75px !important;
         }
         .title {
             text-align: center;
