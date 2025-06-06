@@ -22,10 +22,7 @@ st.markdown("""
             margin-bottom: 0.2rem !important;
         }
         
-        [data-testid="stFileUploader"] label {
-            min-height: 100px !important;
-            padding: 0.3rem !important;
-        }
+        
         
         .title {
             text-align: center;
@@ -46,9 +43,9 @@ st.markdown("""
             margin: 0.8rem 0 !important;
         }
         /* Lavere højde kun for de nederste uploadfelter */
-        div[data-testid="stFileUploader"]:nth-of-type(n+2) label {
+        div[data-testid="stFileUploader"] label {
             min-height: 80px !important;
-            padding: 0.3rem 0.5rem !important;
+            padding: 0.2rem 0.5rem !important;
         }
 </style>
 """, unsafe_allow_html=True)
