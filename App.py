@@ -14,27 +14,33 @@ st.markdown("""
             padding-right: 1rem !important;
         }
         .block-container {
-            padding-top: 2.5rem !important;
-            padding-bottom: 0.2rem !important;
+            padding-top: 2rem !important;
+            padding-bottom: 1rem !important;
         }
         [data-testid="stFileUploader"] {
             padding: 0.5rem !important;
-            margin-bottom: 0.7rem !important;
+            margin-bottom: 0.4rem !important;
         }
         [data-testid="stFileUploader"] > div:first-child {
-            min-height: 75px !important;
+            min-height: 135px !important;
         }
         .title {
             text-align: center;
             font-size: 1.5em;
             font-weight: 700;
-            margin: 0.1em 0 0.2em 0;
+            margin: 0.2em 0 0.3em 0;
         }
         .subtitle {
             text-align: center;
             font-size: 0.9em;
             color: #444;
-            margin-bottom: 0.5em;
+            margin-bottom: 0.6em;
+        }
+        h5 {
+            margin: 0.8rem 0 0.5rem 0 !important;
+        }
+        hr {
+            margin: 1.2rem 0 !important;
         }
 </style>
 """, unsafe_allow_html=True)
@@ -46,10 +52,10 @@ TEMPLATE_PATH = "ZPP_standard_template.xlsx"
 if not os.path.exists(TEMPLATE_PATH):
     st.error("Standardskabelonen mangler i projektmappen. Tilføj filen og genstart appen.")
 else:
-    st.markdown("<h5 style='margin-top:3rem;'>📦 Ordrebekræftelse</h5>", unsafe_allow_html=True)
+    st.markdown("<h5>📦 Ordrebekræftelse</h5>", unsafe_allow_html=True)
     order_file = st.file_uploader("Upload ordrebekræftelse (hovedark)", type=["xlsx", "csv"], key="order")
 
-    st.markdown("<hr style='margin:2rem 0;'>", unsafe_allow_html=True)
+    st.markdown("<hr>", unsafe_allow_html=True)
     st.markdown("<h5>📂 Datakilder</h5>", unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
