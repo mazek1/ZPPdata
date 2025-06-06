@@ -19,10 +19,10 @@ st.markdown("""
         }
         [data-testid="stFileUploader"] {
             padding: 0.5rem !important;
-            margin-bottom: 0.4rem !important;
+            margin-bottom: 0.2rem !important;
         }
         [data-testid="stFileUploader"] > div:first-child {
-            min-height: 135px !important;
+            height: 100px !important;
         }
         .title {
             text-align: center;
@@ -37,10 +37,10 @@ st.markdown("""
             margin-bottom: 0.6em;
         }
         h5 {
-            margin: 0.8rem 0 0.5rem 0 !important;
+            margin: 0.6rem 0 0.3rem 0 !important;
         }
         hr {
-            margin: 1.2rem 0 !important;
+            margin: 0.8rem 0 !important;
         }
 </style>
 """, unsafe_allow_html=True)
