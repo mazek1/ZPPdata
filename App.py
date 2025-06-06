@@ -43,7 +43,7 @@ st.markdown("""
         }
         /* Højde på dropzoner */
         [data-testid="stFileUploader"] section {
-            height: 50px !important;
+            height: 80px !important;
             display: flex;
             flex-direction: column;
             justify-content: right;
