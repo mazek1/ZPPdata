@@ -13,25 +13,25 @@ st.markdown("""
             margin: 0 !important;
         }
         .block-container {
-            padding-top: 0.5rem !important;
-            padding-bottom: 0.5rem !important;
+            padding-top: 0.2rem !important;
+            padding-bottom: 0.2rem !important;
         }
-        .stFileUploader { margin-bottom: 0.2rem; padding: 0.2rem; }
+        .stFileUploader { margin-bottom: 0.1rem; padding: 0.1rem; }
         .file-col [data-testid="stFileUploader"] {
-            min-height: 24px !important;
-            padding: 0.05rem 0.3rem;
+            min-height: 20px !important;
+            padding: 0.02rem 0.2rem;
         }
         .title {
             text-align: center;
-            font-size: 1.6em;
+            font-size: 1.5em;
             font-weight: 700;
-            margin: 0.2em 0 0.3em 0;
+            margin: 0.1em 0 0.2em 0;
         }
         .subtitle {
             text-align: center;
-            font-size: 0.95em;
+            font-size: 0.9em;
             color: #444;
-            margin-bottom: 0.8em;
+            margin-bottom: 0.5em;
         }
 </style>
 """, unsafe_allow_html=True)
