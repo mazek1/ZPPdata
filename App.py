@@ -42,7 +42,7 @@ st.markdown("""
             margin: 0.6rem 0 !important;
         }
         /* Lavere højde kun for de nederste uploadfelter */
-        div[data-testid="stFileUploader"] > div {
+        [data-testid="stFileUploader"] section {
             height: 135px !important;
         }
 </style>
