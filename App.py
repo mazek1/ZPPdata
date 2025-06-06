@@ -10,7 +10,8 @@ st.markdown("""
     <style>
         .main { background-color: #f9f9f9; }
         .block-container { padding-top: 2rem; padding-bottom: 2rem; }
-        .stFileUploader { margin-bottom: 1rem; max-width: 480px !important; padding: 0.5rem; }
+        .stFileUploader { margin-bottom: 1rem; padding: 0.5rem; }
+        [data-testid="stFileUploader"] { min-height: 80px; }
         .title { text-align: center; font-size: 2.2em; font-weight: 700; }
         .subtitle { text-align: center; font-size: 1.2em; color: #444; }
 </style>
