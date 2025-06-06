@@ -21,16 +21,12 @@ st.markdown("""
             padding: 0.5rem !important;
             margin-bottom: 0.2rem !important;
         }
-        [data-testid="stFileUploader"] > div > div {
-            height: auto !important;
+        
+        [data-testid="stFileUploader"] label {
+            min-height: 100px !important;
+            padding: 0.3rem !important;
         }
-        [data-testid="stFileUploader"] .upload-drop-zone {
-            min-height: 135px !important;
-        }
-        [data-testid="stFileUploader"] div[style*="flex-direction: column"] {
-            padding: 0.5rem !important;
-            height: 100px !important;
-        }
+        
         .title {
             text-align: center;
             font-size: 1.5em;
