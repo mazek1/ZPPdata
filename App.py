@@ -43,7 +43,7 @@ st.markdown("""
         }
         /* Lavere højde kun for de nederste uploadfelter */
         [data-testid="stFileUploader"] section {
-            height: 135px !important;
+            height: 80px !important;
         }
 </style>
 """, unsafe_allow_html=True)
