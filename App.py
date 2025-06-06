@@ -43,7 +43,7 @@ st.markdown("""
         }
         /* Lavere højde kun for de nederste uploadfelter */
         div[data-testid="stFileUploader"] label {
-            min-height: 80px !important;
+            min-height: 50px !important;
             padding: 0rem 0rem !important;
             margin: 0 !important;
         }
