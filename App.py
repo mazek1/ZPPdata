@@ -9,11 +9,11 @@ st.set_page_config(page_title="ZPP Skabelon-Udfylder", layout="centered")
 st.markdown("""
     <style>
         .main { background-color: #f9f9f9; }
-        .block-container { padding-top: 2rem; padding-bottom: 2rem; }
-        .stFileUploader { margin-bottom: 1rem; padding: 0.5rem; }
-        .file-col [data-testid="stFileUploader"] { min-height: 40px !important; padding: 0.25rem 0.5rem; }
-        .title { text-align: center; font-size: 2.2em; font-weight: 700; }
-        .subtitle { text-align: center; font-size: 1.2em; color: #444; }
+        .block-container { padding-top: 1rem; padding-bottom: 1rem; }
+        .stFileUploader { margin-bottom: 0.5rem; padding: 0.4rem; }
+        .file-col [data-testid="stFileUploader"] { min-height: 30px !important; padding: 0.1rem 0.4rem; }
+        .title { text-align: center; font-size: 1.9em; font-weight: 700; margin-bottom: 0.2em; }
+        .subtitle { text-align: center; font-size: 1.05em; color: #444; margin-bottom: 1.5em; }
 </style>
 """, unsafe_allow_html=True)
 
