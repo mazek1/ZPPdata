@@ -21,8 +21,8 @@ st.markdown("""
             padding: 0.5rem !important;
             margin-bottom: 0.2rem !important;
         }
-        [data-testid="stFileUploader"] > div:first-child {
-            height: 100px !important;
+        [data-testid="stFileUploader"] > div > div {
+            height: 135px !important;
         }
         .title {
             text-align: center;
