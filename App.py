@@ -9,51 +9,49 @@ st.set_page_config(page_title="ZPP Skabelon-Udfylder", layout="centered")
 st.markdown("""
     <style>
         html, body, .main, .block-container {
-            padding-top: 2rem !important;
-            padding-bottom: 0.2rem !important;
+            padding-top: 0rem !important;
+            padding-bottom: 0rem !important;
         }
         .block-container {
             padding-top: 2rem !important;
-            padding-bottom: 0.2rem !important;
+            padding-bottom: 0rem !important;
         }
         [data-testid="stFileUploader"] {
-            padding: 0.2rem !important;
-            margin-bottom: 1.2rem !important;
+            padding: 0rem !important;
+            margin-bottom: 0rem !important;
         }
+        
+        
+        
         .title {
             text-align: center;
             font-size: 1.5em;
             font-weight: 700;
-            margin: 0.2em 0 0.3em 0;
+            margin: 0em 0 0em 0;
         }
         .subtitle {
             text-align: center;
             font-size: 0.9em;
             color: #444;
-            margin-bottom: 0.6em;
+            margin-bottom: 0em;
         }
         h5 {
-            margin: 0.2rem 0 0.2rem 0 !important;
+            margin: 0rem 0 0rem 0 !important;
         }
         hr {
-            margin: 2rem 0 !important;
+            margin: 0rem 0 !important;
         }
         /* Højde på dropzoner */
         [data-testid="stFileUploader"] section {
             height: 50px !important;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-end;
-            padding: 0.25rem 1rem !important;
         }
-
-        [data-testid="stFileUploader"] button {
-            padding: 0.2rem 0.5rem !important;
-            font-size: 0.8rem !important;
+        /* Lavere højde kun for de nederste uploadfelter */
+        div[data-testid="stFileUploader"] label {
+            min-height: 20px !important;
+            padding: 0rem 0rem !important;
             margin: 0 !important;
         }
-    </style>
+</style>
 """, unsafe_allow_html=True)
 
 st.markdown("<div class='title'>ZPP Skabelon-Udfylder</div>", unsafe_allow_html=True)
