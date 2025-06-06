@@ -10,10 +10,10 @@ st.markdown("""
     <style>
         .main { background-color: #f9f9f9; }
         .block-container { padding-top: 2rem; padding-bottom: 2rem; }
-        .stFileUploader { margin-bottom: 1rem; }
+        .stFileUploader { margin-bottom: 1rem; max-width: 480px !important; padding: 0.5rem; }
         .title { text-align: center; font-size: 2.2em; font-weight: 700; }
         .subtitle { text-align: center; font-size: 1.2em; color: #444; }
-    </style>
+</style>
 """, unsafe_allow_html=True)
 
 st.markdown("<div class='title'>ZPP Skabelon-Udfylder</div>", unsafe_allow_html=True)
